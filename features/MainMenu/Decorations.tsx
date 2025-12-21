@@ -301,64 +301,39 @@ InteractiveChar.displayName = 'InteractiveChar';
 interface StaticCharProps {
   style: CharacterStyle;
   isAnimating?: boolean;
+  isFading?: boolean;
 }
 
-const StaticChar = memo(({ style, isAnimating = false }: StaticCharProps) => {
-  // Track fade-out state to ensure smooth transition when animation stops
-  const [fadeOpacity, setFadeOpacity] = useState<number | null>(null);
-  const prevAnimating = useRef(isAnimating);
-
-  useEffect(() => {
-    // When animation stops, we need to smoothly fade from potentially dim (0.3) to bright (1.0)
-    if (prevAnimating.current && !isAnimating) {
-      // Step 1: Set to minimum opacity (where animation might be)
-      setFadeOpacity(ANIMATION_CONFIG.minOpacity);
-
-      // Step 2: Use double rAF to ensure browser applies the initial opacity before transitioning
-      requestAnimationFrame(() => {
-        requestAnimationFrame(() => {
-          // Step 3: Transition to full opacity
-          setFadeOpacity(1);
-
-          // Step 4: Clean up after transition completes
-          setTimeout(() => {
-            setFadeOpacity(null);
-          }, ANIMATION_CONFIG.transitionDuration);
-        });
-      });
-    }
-    prevAnimating.current = isAnimating;
-  }, [isAnimating]);
-
-  // Only animate when isAnimating is true AND we're not in fade-out mode
-  const shouldAnimate = isAnimating && fadeOpacity === null;
-
-  return (
-    <span
-      className={clsx(
-        'inline-flex items-center justify-center text-4xl',
-        style.fontClass
-      )}
-      aria-hidden='true'
-      style={{
-        color: style.color,
-        contentVisibility: 'auto',
-        containIntrinsicSize: '36px',
-        // Apply fade transition when in fade-out mode
-        ...(fadeOpacity !== null && {
-          opacity: fadeOpacity,
-          transition: `opacity ${ANIMATION_CONFIG.transitionDuration}ms ease-in-out`
-        }),
-        // Apply breathe animation only when not fading
-        ...(shouldAnimate && {
-          animation: `breathe ${ANIMATION_CONFIG.pulseDuration}ms ease-in-out infinite`
-        })
-      }}
-    >
-      {style.char}
-    </span>
-  );
-});
+const StaticChar = memo(
+  ({ style, isAnimating = false, isFading = false }: StaticCharProps) => {
+    return (
+      <span
+        className={clsx(
+          'inline-flex items-center justify-center text-4xl',
+          style.fontClass
+        )}
+        aria-hidden='true'
+        style={{
+          color: style.color,
+          contentVisibility: 'auto',
+          containIntrinsicSize: '36px',
+          // When fading: apply opacity 1 with smooth transition
+          ...(isFading && {
+            opacity: 1,
+            transition: `opacity ${ANIMATION_CONFIG.transitionDuration}ms ease-in-out`
+          }),
+          // When animating: apply breathe animation
+          ...(isAnimating &&
+            !isFading && {
+              animation: `breathe ${ANIMATION_CONFIG.pulseDuration}ms ease-in-out infinite`
+            })
+        }}
+      >
+        {style.char}
+      </span>
+    );
+  }
+);
 
 StaticChar.displayName = 'StaticChar';
 
@@ -382,6 +357,7 @@ const Decorations = ({
   const [animatingIndices, setAnimatingIndices] = useState<Set<number>>(
     new Set()
   );
+  const [fadingIndices, setFadingIndices] = useState<Set<number>>(new Set());
   const { playClick } = useClick();
 
   // Store latest playClick in ref to keep handleExplode stable
@@ -465,25 +441,38 @@ const Decorations = ({
       return indices;
     };
 
-    // Helper: Remove N random items from a set
-    const removeRandomFromSet = (set: Set<number>, count: number): Set<number> => {
+    // Helper: Remove N random items from a set and return them
+    const removeRandomFromSet = (
+      set: Set<number>,
+      count: number
+    ): { remaining: Set<number>; removed: Set<number> } => {
       const array = Array.from(set);
-      const toRemove = new Set<number>();
-      while (toRemove.size < Math.min(count, array.length)) {
-        toRemove.add(array[Math.floor(Math.random() * array.length)]);
+      const removedItems = new Set<number>();
+      while (removedItems.size < Math.min(count, array.length)) {
+        const randomIndex = Math.floor(Math.random() * array.length);
+        removedItems.add(array[randomIndex]);
       }
-      return new Set(array.filter(item => !toRemove.has(item)));
+      const remaining = new Set(array.filter(item => !removedItems.has(item)));
+      return { remaining, removed: removedItems };
     };
 
-    // Helper: Add N random indices to a set (avoiding duplicates)
+    // Helper: Add N random indices to a set (avoiding existing ones)
     const addRandomToSet = (
       set: Set<number>,
       count: number,
-      max: number
+      max: number,
+      exclude: Set<number>
     ): Set<number> => {
       const newSet = new Set(set);
-      while (newSet.size < Math.min(set.size + count, max)) {
-        newSet.add(Math.floor(Math.random() * max));
+      const combined = new Set([...set, ...exclude]);
+      let attempts = 0;
+      while (newSet.size < Math.min(set.size + count, max) && attempts < count * 10) {
+        const randomIndex = Math.floor(Math.random() * max);
+        if (!combined.has(randomIndex)) {
+          newSet.add(randomIndex);
+          combined.add(randomIndex);
+        }
+        attempts++;
       }
       return newSet;
     };
@@ -495,27 +484,43 @@ const Decorations = ({
     );
     setAnimatingIndices(initialIndices);
 
-    // Gradual turnover: every 2.5s, remove some and add some
+    // Gradual turnover: every 2.5s, move some to fading, add new ones
     const turnoverInterval = setInterval(() => {
       setAnimatingIndices(currentIndices => {
-        // Remove random subset
-        let updated = removeRandomFromSet(
+        // Remove random subset and get what was removed
+        const { remaining, removed } = removeRandomFromSet(
           currentIndices,
           ANIMATION_CONFIG.turnoverCount
         );
-        // Add new random subset
-        updated = addRandomToSet(
-          updated,
+
+        // Move removed items to fading set
+        setFadingIndices(currentFading => {
+          const newFading = new Set([...currentFading, ...removed]);
+          // Clean up old fading items after transition duration
+          setTimeout(() => {
+            setFadingIndices(f => {
+              const cleaned = new Set(f);
+              removed.forEach(idx => cleaned.delete(idx));
+              return cleaned;
+            });
+          }, ANIMATION_CONFIG.transitionDuration);
+          return newFading;
+        });
+
+        // Add new random subset (excluding fading ones)
+        return addRandomToSet(
+          remaining,
           ANIMATION_CONFIG.turnoverCount,
-          styles.length
+          styles.length,
+          removed
         );
-        return updated;
       });
     }, ANIMATION_CONFIG.turnoverFrequency);
 
     return () => {
       clearInterval(turnoverInterval);
       setAnimatingIndices(new Set());
+      setFadingIndices(new Set());
     };
   }, [interactive, styles.length]);
 
@@ -536,10 +541,11 @@ const Decorations = ({
           key={index}
           style={style}
           isAnimating={animatingIndices.has(index)}
+          isFading={fadingIndices.has(index)}
         />
       ));
     }
-  }, [styles, interactive, handleExplode, animatingIndices]);
+  }, [styles, interactive, handleExplode, animatingIndices, fadingIndices]);
 
   if (styles.length === 0) return null;
 
