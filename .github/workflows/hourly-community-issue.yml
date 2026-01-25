@@ -2,7 +2,7 @@ name: Create Community Contribution Issue
 
 on:
   schedule:
-    - cron: '*/15 * * * *'
+    - cron: '*/20 * * * *'
   workflow_dispatch:
     inputs:
       force_type:
@@ -54,6 +54,18 @@ jobs:
 
             const forceType = (context.payload.inputs && context.payload.inputs.force_type) ? String(context.payload.inputs.force_type).trim() : '';
             const dryRun = !!(context.payload.inputs && (context.payload.inputs.dry_run === true || context.payload.inputs.dry_run === 'true'));
+
+            const emojiBank = [
+              '🎨', '🎋', '🎌', '🌸', '🌊', '🌙', '⭐', '🍜', '🍙', '🍵',
+              '🧭', '🧩', '🪄', '🪷', '🪭', '🎏', '🏮', '🗾', '⛩️', '🗻',
+              '🌧️', '⚡', '❄️', '🍂', '🍣', '🍡', '🥢', '🧧', '📚', '🖌️',
+              '🧵', '🎎', '🪙', '🛤️', '🚅', '🧪', '🧠', '🧶', '🪟', '🪨',
+              '🏯', '🏹', '🪁', '🐉', '🦊', '🐾', '🐼', '🦋', '🐟', '🪸'
+            ];
+
+            function pickEmoji() {
+              return emojiBank[Math.floor(Math.random() * emojiBank.length)];
+            }
 
             const statePath = 'data/community/automation-state.json';
             const themeBacklogPath = 'data/community/theme-backlog.json';
@@ -172,7 +184,9 @@ jobs:
               }
               
               const tmpl = t.theme;
-              issueTitle = tmpl.title.replace('{name}', item.name);
+              issueTitle = tmpl.title
+                .replace('{emoji}', pickEmoji())
+                .replace('{name}', item.name);
               
               const instructions = tmpl.instructions.map((instr, i) => `${i + 1}. ${instr.replace(/{name}/g, item.name)}`);
               
@@ -224,7 +238,9 @@ jobs:
               }
               
               const tmpl = t.fact;
-              issueTitle = tmpl.title.replace('{id}', item.id);
+              issueTitle = tmpl.title
+                .replace('{emoji}', pickEmoji())
+                .replace('{id}', item.id);
               
               const instructions = tmpl.instructions.map((instr, i) => `${i + 1}. ${instr.replace(/{id}/g, item.id)}`);
               
@@ -281,7 +297,9 @@ jobs:
               }
               
               const tmpl = t.proverb;
-              issueTitle = tmpl.title.replace('{id}', item.id);
+              issueTitle = tmpl.title
+                .replace('{emoji}', pickEmoji())
+                .replace('{id}', item.id);
               
               const instructions = tmpl.instructions.map((instr, i) => `${i + 1}. ${instr.replace(/{id}/g, item.id)}`);
               

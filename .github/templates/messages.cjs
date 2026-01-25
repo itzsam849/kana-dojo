@@ -192,7 +192,7 @@ module.exports = {
   issueCreation: {
     theme: {
       title:
-        '[Good First Issue] 🎨 Add New Color Theme: {name} (good-first-issue)',
+        '[Good First Issue] {emoji} Add New Color Theme: {name} (good-first-issue)',
       header: '## 🎨 Add New Color Theme: "{name}"',
       category: 'Community Contribution - Theme',
       difficulty: 'Easy (good first issue!)',
@@ -213,7 +213,8 @@ module.exports = {
       footer: "**Questions?** Comment below and we'll help! 🙌",
     },
     fact: {
-      title: '[Good First Issue] 🎋 Add Interesting, Cultural Fact about Japan {id} (good-first-issue)',
+      title:
+        '[Good First Issue] {emoji} Add Interesting, Cultural Fact about Japan {id} (good-first-issue)',
       header: '## 🎋 Add New Japan Fact',
       category: 'Community Contribution - Fun Fact',
       difficulty: 'Easy (good first issue!)',
@@ -235,7 +236,7 @@ module.exports = {
     },
     proverb: {
       title:
-        '[Good First Issue] 🎌 Add New Japanese Proverb {id} (good-first-issue)',
+        '[Good First Issue] {emoji} Add New Japanese Proverb {id} (good-first-issue)',
       header: '## 🎌 Add Japanese Proverb (ことわざ)',
       category: 'Community Contribution - Proverb',
       difficulty: 'Easy (good first issue!)',
