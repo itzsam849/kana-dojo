@@ -29,7 +29,7 @@ Start with the [Beginner's Contribution Guide](./docs/CONTRIBUTING-BEGINNERS.md)
 
 Contributions are welcome! Whether you're fixing bugs, adding features, improving documentation, or translating — check out [CONTRIBUTING.md](./CONTRIBUTING.md) to get started.
 
-[Live Demo](https://kanadojo.com) · [Documentation](./docs/) · [Contributing](./CONTRIBUTING.md)
+[Live Demo](https://kanadojo.com) · [Documentation](./docs/)
 
 </div>
 
