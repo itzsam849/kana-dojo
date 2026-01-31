@@ -525,11 +525,12 @@ const WelcomeModal = () => {
                     <button
                       key={fontObj.name}
                       className={clsx(
-                        'flex cursor-pointer items-center justify-center overflow-hidden rounded-xl border-0 bg-[var(--card-color)] px-4 py-4 transition-all duration-200 hover:opacity-90 active:scale-95',
+                        'flex cursor-pointer items-center justify-center overflow-hidden rounded-xl border-0 px-4 py-4 transition-all duration-200 hover:opacity-90 active:scale-95',
                         localFont === fontObj.name
                           ? 'border-[var(--main-color)]'
                           : 'border-[var(--card-color)]',
                       )}
+                      style={{ backgroundColor: 'var(--background-color)' }}
                       onClick={() => {
                         playClick();
                         setLocalFont(fontObj.name);
