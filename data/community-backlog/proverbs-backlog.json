@@ -542,7 +542,7 @@
     "romaji": "Warau kado ni wa fuku kitaru",
     "english": "Fortune comes to a laughing gate",
     "meaning": "Good fortune comes to those who smile",
-    "completed": false
+    "completed": true
   },
   {
     "id": 69,
@@ -550,7 +550,7 @@
     "romaji": "Ryouyaku wa kuchi ni nigashi",
     "english": "Good medicine tastes bitter",
     "meaning": "Helpful advice can be hard to hear",
-    "completed": false
+    "completed": true
   },
   {
     "id": 70,
@@ -558,7 +558,7 @@
     "romaji": "Tsuru no hitokoe",
     "english": "One cry of the crane",
     "meaning": "A single influential person settles a matter",
-    "completed": false
+    "completed": true
   },
   {
     "id": 71,
@@ -566,7 +566,7 @@
     "romaji": "Oni ni kanabou",
     "english": "An iron club to an ogre",
     "meaning": "Making someone strong even stronger",
-    "completed": false
+    "completed": true
   },
   {
     "id": 72,
@@ -574,7 +574,7 @@
     "romaji": "Yakeishi ni mizu",
     "english": "Water on a hot stone",
     "meaning": "A futile effort with little effect",
-    "completed": false
+    "completed": true
   },
   {
     "id": 73,
@@ -582,7 +582,7 @@
     "romaji": "Oni no inuma ni sentaku",
     "english": "Do laundry while the ogre is away",
     "meaning": "Take advantage of someone's absence",
-    "completed": false
+    "completed": true
   },
   {
     "id": 74,
@@ -590,7 +590,7 @@
     "romaji": "Toranu tanuki no kawazan'you",
     "english": "Counting a raccoon dog's skins before catching it",
     "meaning": "Don't count your chickens before they hatch",
-    "completed": false
+    "completed": true
   },
   {
     "id": 75,
@@ -598,7 +598,7 @@
     "romaji": "Ishi no ue ni mo san nen",
     "english": "Three years on a stone",
     "meaning": "Perseverance will be rewarded",
-    "completed": false
+    "completed": true
   },
   {
     "id": 76,
@@ -606,7 +606,7 @@
     "romaji": "Ame futte ji katamaru",
     "english": "After rain, the ground hardens",
     "meaning": "Adversity can strengthen relationships",
-    "issued": false
+    "issued": true
   },
   {
     "id": 77,
