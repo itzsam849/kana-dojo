@@ -263,6 +263,12 @@ module.exports = {
 
     theme: {
       title: '[Good First Issue] {emoji} Add New Color Theme: {name} (good-first-issue, <1 min)',
+      adjectives: [
+        'creative', 'vibrant', 'playful', 'elegant', 'cozy',
+        'bold', 'minimal', 'fresh', 'polished', 'modern',
+        'radiant', 'serene', 'stylish', 'clean', 'harmonious',
+        'balanced', 'colorful', 'refined', 'beautiful', 'eye-catching',
+      ],
       header: '## 🎨 Add New Color Theme: "{name}"',
       category: 'Community Contribution - Theme',
       estimatedTime: '<1 min',
@@ -280,6 +286,12 @@ module.exports = {
     fact: {
       title:
         '[Good First Issue] {emoji} Add Interesting, Cultural Fact about Japan {id} (good-first-issue, <1 min)',
+      adjectives: [
+        'interesting', 'surprising', 'curious', 'insightful', 'engaging',
+        'fascinating', 'bite-sized', 'memorable', 'educational', 'cultural',
+        'authentic', 'thoughtful', 'fun', 'informative', 'unique',
+        'captivating', 'meaningful', 'beginner-friendly', 'clear', 'high-quality',
+      ],
       header: '## 🎋 Add New Japan Fact',
       category: 'Community Contribution - Fun Fact',
       estimatedTime: '<1 min',
@@ -293,6 +305,12 @@ module.exports = {
     },
     proverb: {
       title: '[Good First Issue] {emoji} Add New Japanese Proverb {id} (good-first-issue, <1 min)',
+      adjectives: [
+        'wise', 'timeless', 'meaningful', 'traditional', 'insightful',
+        'cultural', 'concise', 'impactful', 'classic', 'thought-provoking',
+        'memorable', 'authentic', 'elegant', 'expressive', 'symbolic',
+        'practical', 'deep', 'inspiring', 'learner-friendly', 'relevant',
+      ],
       header: '## 🎌 Add Japanese Proverb (ことわざ)',
       category: 'Community Contribution - Proverb',
       estimatedTime: '<1 min',
@@ -305,6 +323,12 @@ module.exports = {
     },
     trivia: {
       title: '[Good First Issue] {emoji} Add New Trivia Question {id} (good-first-issue, <1 min)',
+      adjectives: [
+        'fun', 'challenging', 'curious', 'engaging', 'smart',
+        'playful', 'interesting', 'quick', 'memorable', 'educational',
+        'tricky', 'thoughtful', 'well-crafted', 'beginner-friendly', 'creative',
+        'exciting', 'fresh', 'clear', 'balanced', 'high-quality',
+      ],
       header: '## 🧠 Add New Trivia Question',
       category: 'Community Contribution - Trivia',
       estimatedTime: '<1 min',
@@ -317,6 +341,12 @@ module.exports = {
     },
     grammar: {
       title: '[Good First Issue] {emoji} Add New Grammar Point {id} (good-first-issue, <1 min)',
+      adjectives: [
+        'clear', 'concise', 'practical', 'useful', 'structured',
+        'helpful', 'learner-friendly', 'accurate', 'simple', 'well-explained',
+        'essential', 'high-impact', 'focused', 'reliable', 'accessible',
+        'digestible', 'step-by-step', 'polished', 'meaningful', 'high-quality',
+      ],
       header: '## 📖 Add New Grammar Point',
       category: 'Community Contribution - Grammar',
       estimatedTime: '<1 min',
@@ -329,6 +359,12 @@ module.exports = {
     },
     animeQuote: {
       title: '[Good First Issue] {emoji} Add Famous Anime Quote {id} (good-first-issue, <1 min)',
+      adjectives: [
+        'iconic', 'memorable', 'expressive', 'emotional', 'classic',
+        'impactful', 'popular', 'engaging', 'authentic', 'beloved',
+        'dramatic', 'meaningful', 'inspiring', 'cultural', 'fun',
+        'well-known', 'powerful', 'vivid', 'timeless', 'learner-friendly',
+      ],
       header: '## 🎬 Add Famous Anime Quote',
       category: 'Community Contribution - Anime Quote',
       estimatedTime: '<1 min',

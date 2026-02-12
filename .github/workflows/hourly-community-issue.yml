@@ -51,6 +51,26 @@ jobs:
               return emojiBank[Math.floor(Math.random() * emojiBank.length)];
             }
 
+            function pickTwoAdjectives(adjectives) {
+              const fallback = ['helpful', 'friendly', 'quick', 'clear', 'creative'];
+              const pool = Array.isArray(adjectives) && adjectives.length > 0 ? adjectives : fallback;
+              const first = pool[Math.floor(Math.random() * pool.length)];
+              let second = pool[Math.floor(Math.random() * pool.length)];
+
+              if (pool.length > 1) {
+                while (second === first) {
+                  second = pool[Math.floor(Math.random() * pool.length)];
+                }
+              }
+
+              return [first, second];
+            }
+
+            function addTitleAdjectives(title, adjectives) {
+              const [first, second] = pickTwoAdjectives(adjectives);
+              return String(title).replace(' Add ', ` Add ${first}, ${second} `);
+            }
+
             const statePath = 'data/community-backlog/automation-state.json';
             const themeBacklogPath = 'data/community-backlog/theme-backlog.json';
             const factsBacklogPath = 'data/community-backlog/facts-backlog.json';
@@ -229,6 +249,7 @@ jobs:
               issueTitle = tmpl.title
                 .replace('{emoji}', pickEmoji())
                 .replace('{name}', item.name);
+              issueTitle = addTitleAdjectives(issueTitle, tmpl.adjectives);
               
               const instructions = t.buildInstructions(tmpl.file, tmpl.itemType, tmpl.prTitle, { step2: tmpl.step2, step3: tmpl.step3 }).map((instr, i) => `${i + 1}. ${instr.replace(/{name}/g, item.name)}`);
               
@@ -284,6 +305,7 @@ jobs:
               issueTitle = tmpl.title
                 .replace('{emoji}', pickEmoji())
                 .replace('{id}', item.id);
+              issueTitle = addTitleAdjectives(issueTitle, tmpl.adjectives);
               
               const instructions = t.buildInstructions(tmpl.file, tmpl.itemType, tmpl.prTitle).map((instr, i) => `${i + 1}. ${instr.replace(/{id}/g, item.id)}`);
               
@@ -344,6 +366,7 @@ jobs:
               issueTitle = tmpl.title
                 .replace('{emoji}', pickEmoji())
                 .replace('{id}', item.id);
+              issueTitle = addTitleAdjectives(issueTitle, tmpl.adjectives);
               
               const instructions = t.buildInstructions(tmpl.file, tmpl.itemType, tmpl.prTitle).map((instr, i) => `${i + 1}. ${instr.replace(/{id}/g, item.id)}`);
               
@@ -412,6 +435,7 @@ jobs:
               issueTitle = tmpl.title
                 .replace('{emoji}', pickEmoji())
                 .replace('{id}', item.id);
+              issueTitle = addTitleAdjectives(issueTitle, tmpl.adjectives);
 
               const difficultyFile = triviaSourcePaths[item.difficulty] || triviaSourcePaths.easy;
               const instructions = t.buildInstructions(tmpl.file.replace('{difficultyFile}', difficultyFile), tmpl.itemType, tmpl.prTitle).map((instr, i) => `${i + 1}. ${instr.replace(/{id}/g, item.id)}`);
@@ -467,6 +491,7 @@ jobs:
               issueTitle = tmpl.title
                 .replace('{emoji}', pickEmoji())
                 .replace('{id}', item.id);
+              issueTitle = addTitleAdjectives(issueTitle, tmpl.adjectives);
 
               const instructions = t.buildInstructions(tmpl.file, tmpl.itemType, tmpl.prTitle).map((instr, i) => `${i + 1}. ${instr.replace(/{id}/g, item.id)}`);
               const codeBlock = `\`\`\`json\n${item.text}\n\`\`\``;
@@ -533,6 +558,7 @@ jobs:
               issueTitle = tmpl.title
                 .replace('{emoji}', pickEmoji())
                 .replace('{id}', item.id);
+              issueTitle = addTitleAdjectives(issueTitle, tmpl.adjectives);
 
               const instructions = t.buildInstructions(tmpl.file, tmpl.itemType, tmpl.prTitle).map((instr, i) => `${i + 1}. ${instr.replace(/{id}/g, item.id)}`);
               const codeBlock = `\`\`\`json\n{\n  \"japanese\": \"${item.japanese}\",\n  \"romaji\": \"${item.romaji}\",\n  \"english\": \"${item.english}\",\n  \"anime\": \"${item.anime}\",\n  \"character\": \"${item.character}\"\n}\n\`\`\``;
