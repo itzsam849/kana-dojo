@@ -557,7 +557,7 @@
     "mainColor": "oklch(85.0% 0.155 55.0 / 1)",
     "secondaryColor": "oklch(72.0% 0.175 25.0 / 1)",
     "issued": false,
-    "completed": false
+    "completed": true
   },
   {
     "id": "taiko-thunder",
@@ -567,7 +567,7 @@
     "mainColor": "oklch(68.0% 0.175 30.0 / 1)",
     "secondaryColor": "oklch(78.0% 0.125 45.0 / 1)",
     "issued": false,
-    "completed": false
+    "completed": true
   },
   {
     "id": "izakaya-warm",
@@ -576,7 +576,7 @@
     "backgroundColor": "oklch(20.0% 0.045 35.0 / 1)",
     "mainColor": "oklch(70.0% 0.165 30.0 / 1)",
     "secondaryColor": "oklch(80.0% 0.115 65.0 / 1)",
-    "issued": false,
+    "issued": true,
     "completed": false
   },
   {
