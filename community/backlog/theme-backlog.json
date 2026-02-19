@@ -1061,7 +1061,9 @@
     "mainColor": "oklch(62.0% 0.195 10.0 / 1)",
     "secondaryColor": "oklch(78.0% 0.095 350.0 / 1)",
     "issued": true,
-    "completed": false
+    "completed": true,
+    "completedBy": "Mmatani45",
+    "completedPR": 5385
   },
   {
     "id": "biwako-blue",
